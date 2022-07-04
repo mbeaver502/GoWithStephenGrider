@@ -17,18 +17,22 @@ func main() {
 		"https://example.com",
 	}
 
+	checkLinksSync(links)
+}
+
+func checkLinksSync(links []string) {
 	for _, link := range links {
-		err := checkLink(link)
+		err := checkLinkSync(link)
 
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Error:", err)
 		} else {
 			fmt.Printf("Link appears up! %v\n", link)
 		}
 	}
 }
 
-func checkLink(link string) error {
+func checkLinkSync(link string) error {
 	resp, err := http.Get(link)
 
 	if err != nil {
