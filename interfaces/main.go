@@ -9,7 +9,7 @@ import "fmt"
 // So anywhere there's a type "bot" being used, you can use that more concrete type (e.g., englishBot).
 // It's like we have a public class EnglishBot : IBot , where a class implements an interface.
 type bot interface {
-	// functionName(params) returnType
+	// functionName(argTypes) returnTypes
 	getGreeting() string
 }
 
