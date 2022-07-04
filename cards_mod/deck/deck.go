@@ -1,0 +1,89 @@
+package deck
+
+import (
+	"fmt"
+	"io/ioutil"
+	"math/rand"
+	"os"
+	"strings"
+	"time"
+)
+
+// Create a new type of "deck", which is a slice of strings.
+type deck []string
+
+// Return a new deck of cards.
+func NewDeck() deck {
+	cards := deck{} // Create a new empty deck.
+
+	cardSuits := []string{"Spades", "Clubs", "Hearts", "Diamonds"}
+	cardValues := []string{"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"}
+
+	// _ is the discard variable.
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
+			cards = append(cards, value+" of "+suit)
+		}
+	}
+
+	return cards
+}
+
+// NB: This has no bounds-checking or any other kind of error handling...
+func DealHand(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
+
+// d is a receiver of type deck on the function print
+// "d" is the alias we're using to refer to the actual deck variable that's using this function.
+// Any variable that is of type deck has access to this print function.
+// This would be similar to a public method on a class object, where all objects of the same type have access to that same public method.
+// In a way, the "d" alias is similar to "this" or "self", but do *not* use those names.
+// By convention, the receiver is named one or two characters based on the type (so "deck" => "d").
+// Note that Go is NOT object-oriented, so this is not a method on a class!
+func (d deck) Print() {
+	for i, card := range d {
+		fmt.Println(i, card)
+	}
+}
+
+func (d deck) ToString() string {
+	// Type-cast our deck to a slice of strings (i.e., a slice of slices of string).
+	// Join together all the slices, separated by a comma.
+	return strings.Join([]string(d), ",")
+}
+
+func (d deck) SaveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.ToString()), 0666)
+}
+
+// Read a deck from a file.
+func NewDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
+
+	// Error handling for the result from ioutil.ReadFile
+	if err != nil {
+		// Option 1 -- Log the error and return a new deck (call newDeck())
+		// Option 2 -- Log the error and entirely quit the program (fatal error)
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	// This type conversion of deck(...) only works because deck is defined as a slice of string.
+	// Note that strings.Split(...) returns a slice of string.
+	return deck(strings.Split(string(bs), ","))
+}
+
+// Shuffle a deck using rand.Shuffle().
+func (d deck) Shuffle() {
+	// We can use the built-in Shuffle function to conveniently pseudo-randomly shuffle our elements.
+	// https://pkg.go.dev/math/rand@go1.18.3#Shuffle
+	if len(d) > 0 {
+		// Create a new pseudo-random number generator using the system clock as a seed value.
+		rng := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+		rng.Shuffle(len(d), func(i int, j int) {
+			d[i], d[j] = d[j], d[i]
+		})
+	}
+}
