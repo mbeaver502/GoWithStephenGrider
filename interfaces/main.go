@@ -8,6 +8,9 @@ import "fmt"
 // Any type in this program that has a getGreeting() string function is now an honorary "bot".
 // So anywhere there's a type "bot" being used, you can use that more concrete type (e.g., englishBot).
 // It's like we have a public class EnglishBot : IBot , where a class implements an interface.
+// NOTE: Interfaces are NOT the same as generic types like in C#.
+// NOTE: Interfaces are implicit. We don't need to explicitly associate, say, englishBot with bot.
+// NOTE: Interfaces are a contract to help manage types.
 type bot interface {
 	// functionName(argTypes) returnTypes
 	getGreeting() string
