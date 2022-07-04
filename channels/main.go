@@ -18,6 +18,10 @@ func main() {
 	// Each link is checked in turn, waiting for the previous to finish before starting the next.
 	// checkLinksSync(links)
 
+	// We can use channels to communicate between the main go-routine and child go-routines.
+	// Make a new channel that can be communicated over using string type.
+	c := make(chan string)
+
 	for _, link := range links {
 		// Launch a new go-routine for checkLink().
 		//
@@ -30,20 +34,33 @@ func main() {
 		// Concurrency -- We can have multiple threads executing code. If one thread blocks, another one is picked up and worked on.
 		// Parallelism -- Multiple threads executed at the *exact same time*. This requires multiple CPU cores.
 		//
-		go checkLink(link)
+		go checkLink(link, c)
+	}
+
+	// Waiting for a message to come back over the channel is a blocking call.
+	// Once we get something back over the channel, we immediately print it out and the main go-routine exits.
+	// Receiving channel messages is a blocking action!
+	// fmt.Println(<-c)
+
+	// We've create a go-routine for each link. So we should be able to iterate that many times and wait.
+	// Waiting for the channel message is still blocking, but now we're reasonably guaranteed to get messages from each go-routine.
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c)
 	}
 }
 
-func checkLink(link string) {
+func checkLink(link string, c chan string) {
 	// http.Get() is a blocking call, so our routine will be forced to wait until it completes.
 	_, err := http.Get(link)
 
 	if err != nil {
-		fmt.Println(link, "might be down!")
+		c <- link + " might be down!"
+		// fmt.Println(link, "might be down!")
 		return
 	}
 
-	fmt.Println(link, "is up!")
+	c <- link + " is up!"
+	// fmt.Println(link, "is up!")
 }
 
 /*
