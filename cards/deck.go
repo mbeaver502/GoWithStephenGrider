@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -64,11 +65,21 @@ func newDeckFromFile(filename string) deck {
 	if err != nil {
 		// Option 1 -- Log the error and return a new deck (call newDeck())
 		// Option 2 -- Log the error and entirely quit the program (fatal error)
-		fmt.Println("Error: ", err)
+		fmt.Println("Error:", err)
 		os.Exit(1)
 	}
 
 	// This type conversion of deck(...) only works because deck is defined as a slice of string.
 	// Note that strings.Split(...) returns a slice of string.
 	return deck(strings.Split(string(bs), ","))
+}
+
+func (d deck) shuffle() {
+    // We can use the built-in Shuffle function to conveniently pseudo-randomly shuffle our elements.
+    // https://pkg.go.dev/math/rand@go1.18.3#Shuffle
+    if len(d) > 0 {
+        rand.Shuffle(len(d), func(i int, j int) {
+            d[i], d[j] = d[j], d[i]
+        })
+    }
 }

@@ -42,10 +42,13 @@ func main() {
 	cards := newDeck()
 	// cards.print()
 
-	cards.saveToFile("my_cards")
+	//cards.saveToFile("my_cards")
 
-	newCards := newDeckFromFile("my_cards")
-	newCards.print()
+	//newCards := newDeckFromFile("my_cards")
+	//newCards.print()
+
+	cards.shuffle()
+	cards.print()
 
 	//hand, remainingCards := dealHand(cards, 5)
 
