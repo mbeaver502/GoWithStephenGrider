@@ -2,7 +2,14 @@ package main
 
 import "fmt"
 
+// To whom it may concern, here's a contract that anyone can use inside this program.
+// Any variable of type "bot" can perform these actions:
+//  (1) getGreeting() returns a string
+// Any type in this program that has a getGreeting() string function is now an honorary "bot".
+// So anywhere there's a type "bot" being used, you can use that more concrete type (e.g., englishBot).
+// It's like we have a public class EnglishBot : IBot , where a class implements an interface.
 type bot interface {
+	// functionName(params) returnType
 	getGreeting() string
 }
 
