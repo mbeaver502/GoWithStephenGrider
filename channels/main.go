@@ -49,8 +49,16 @@ func main() {
 	// Infinite loop to keep pinging links forever.
 	// We wait to get a response back from the child go-routine and then launch another for the same link.
 	// We are communicating strings over our channel, so we can use the message from that channel as an arg for checkLink().
-	for {
-		go checkLink(<-c, c)
+	// for {
+	// 	go checkLink(<-c, c)
+	// }
+	//
+	// Alternative for-loop syntax.
+	// We can use range on a channel to wait for a channel to return a message.
+	// The message from our channel gets assigned to the variable l, which we can then use as an arg for checkLink().
+	// This is equivalent to the infinite loop above, but this is clearer in purpose.
+	for l := range c {
+		go checkLink(l, c)
 	}
 }
 
