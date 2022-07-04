@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // Create a new type of "deck", which is a slice of strings.
@@ -74,12 +75,16 @@ func newDeckFromFile(filename string) deck {
 	return deck(strings.Split(string(bs), ","))
 }
 
+// Shuffle a deck using rand.Shuffle().
 func (d deck) shuffle() {
-    // We can use the built-in Shuffle function to conveniently pseudo-randomly shuffle our elements.
-    // https://pkg.go.dev/math/rand@go1.18.3#Shuffle
-    if len(d) > 0 {
-        rand.Shuffle(len(d), func(i int, j int) {
-            d[i], d[j] = d[j], d[i]
-        })
-    }
+	// We can use the built-in Shuffle function to conveniently pseudo-randomly shuffle our elements.
+	// https://pkg.go.dev/math/rand@go1.18.3#Shuffle
+	if len(d) > 0 {
+		// Create a new pseudo-random number generator using the system clock as a seed value.
+		rng := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+		rng.Shuffle(len(d), func(i int, j int) {
+			d[i], d[j] = d[j], d[i]
+		})
+	}
 }
