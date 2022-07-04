@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Main entrypoint for our program.
 func main() {
 	// Declare and assign a value to a variable called "card".
 	//      var -- indicates we're declaring a variable
@@ -16,12 +17,26 @@ func main() {
 	//      var card string = "Ace of Spades"
 	//
 	// Alternatively, we can let the Go compiler infer the strong type is a string:
-	// 		card := "Ace of Spades"   	:= is only for assigning a value to a newly created variable!
-	// 		card = "Five of Diamonds" 	Notice variable assignment does not use := for extant variables!
+	//      card := "Ace of Spades"     := is only for assigning a value to a newly created variable!
+	//      card = "Five of Diamonds"   Notice variable assignment does not use := for extant variables!
+	//      card := newCard()           Even now the Go compiler can infer that newCard returns string, so card is string.
+	//
+	// Go has two data structures for representing lists of things:
+	//      (1) Array -- a fixed-size list of things
+	//      (2) Slice -- an array that can grow or shrink in size
+	// Each element in an Array or Slice must be of the same type!
+	//
+	// Create a slice of strings representing our cards:
+	cards := []string{"Ace of Spades", newCard()}
+	cards = append(cards, "Six of Spades") // append returns a new slice object!
 
-	card := newCard() // Even now the Go compiler can infer that newCard returns string, so card is string.
-
-	fmt.Println(card)
+	// The throwaway variable i represents the index of an item in the list.
+	// The throwaway variable card is the current item in our list.
+	// Both the i and card variables have local scope to this for-loop.
+	// The range keyword allows us to iterate over the entire length of the cards slice.
+	for i, card := range cards {
+		fmt.Println(i, card)
+	}
 }
 
 // The newCard function has a return type of string. This function *must* return a string.
