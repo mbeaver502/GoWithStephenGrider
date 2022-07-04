@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // Main entrypoint for our program.
 func main() {
 	// Declare and assign a value to a variable called "card".
@@ -39,8 +41,14 @@ func main() {
 	// }
 	//
 
-	var cards deck = newDeck()
+	cards := newDeck()
+	// cards.print()
 
+	hand, cards := dealHand(cards, 5)
+
+	fmt.Println("-- Dealt Hand --")
+	hand.print()
+	fmt.Println("-- New Deck --")
 	cards.print()
 }
 

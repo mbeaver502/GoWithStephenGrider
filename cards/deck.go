@@ -22,6 +22,10 @@ func newDeck() deck {
 	return cards
 }
 
+func dealHand(d deck, handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
+
 // d is a receiver of type deck on the function print
 // "d" is the alias we're using to refer to the actual deck variable that's using this function.
 // Any variable that is of type deck has access to this print function.
