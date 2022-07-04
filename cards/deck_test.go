@@ -28,13 +28,13 @@ func TestSaveToFileAndNewDeckFromFile(t *testing.T) {
 
 	os.Remove(filename)
 
-	deck := newdeck()
+	deck := newDeck()
 	deck.saveToFile(filename)
 
 	loadedDeck := newDeckFromFile(filename)
 
 	if len(loadedDeck) != 52 {
-		t.Errorf("Expected deck length of 52, but got %v", len(d))
+		t.Errorf("Expected deck length of 52, but got %v", len(deck))
 	}
 
 	os.Remove(filename)
