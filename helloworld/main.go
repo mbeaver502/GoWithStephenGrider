@@ -17,10 +17,14 @@
 // 		Any other name will tell Go that this is *not* an executable package!
 package main
 
-// The fmt package gives us access to std I/O operations like Println
+// We can tell the Go compiler that our program depends on other packages.
+// By default, our package has no access to other packages. To get access, we need use import to link them.
+// import can be used to link to Go standard packages, third-party packages, or user-created packages.
+// The golang docs have a listing of all the standard packages included with Go.
+// The fmt package gives us access to std I/O operations like Println.
 import "fmt"
 
-// Since this is an executable package (package main), we *must* have a func main entrypoint
+// Since this is an executable package (package main), we *must* have a func main entrypoint.
 func main() {
 	fmt.Println("hello world :)")
 }
