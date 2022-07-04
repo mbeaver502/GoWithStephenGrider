@@ -66,6 +66,7 @@ func main() {
 }
 
 // This function will mutate the slice that's passed in!
+// Or rather, the slice struct itself is copied, and the underlying array is modified.
 func updateSlice(s []string) {
 	s[0] = "Bye"
 }
