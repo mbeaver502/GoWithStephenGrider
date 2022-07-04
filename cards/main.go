@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // Main entrypoint for our program.
 func main() {
 	// Declare and assign a value to a variable called "card".
@@ -44,12 +42,18 @@ func main() {
 	cards := newDeck()
 	// cards.print()
 
-	hand, cards := dealHand(cards, 5)
+	cards.saveToFile("my_cards")
 
-	fmt.Println("-- Dealt Hand --")
-	hand.print()
-	fmt.Println("-- New Deck --")
-	cards.print()
+	//hand, remainingCards := dealHand(cards, 5)
+
+	// fmt.Println("-- Dealt Hand --")
+	// hand.print()
+
+	// fmt.Println("-- New Deck --")
+	// remainingCards.print()
+
+	// fmt.Println(hand.toString())
+	// fmt.Println(remainingCards.toString())
 }
 
 // The newCard function has a return type of string. This function *must* return a string.

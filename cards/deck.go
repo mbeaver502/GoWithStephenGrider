@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+// Note the syntax for importing multiple packages.
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
 
 // Create a new type of "deck", which is a slice of strings.
 type deck []string
@@ -22,6 +27,7 @@ func newDeck() deck {
 	return cards
 }
 
+// NB: This has no bounds-checking or any other kind of error handling...
 func dealHand(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
@@ -37,4 +43,14 @@ func (d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
+}
+
+func (d deck) toString() string {
+	// Type-cast our deck to a slice of strings (i.e., a slice of slices of string).
+	// Join together all the slices, separated by a comma.
+	return strings.Join([]string(d), ",")
+}
+
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
