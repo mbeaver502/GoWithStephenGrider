@@ -44,8 +44,13 @@ func main() {
 
 	// We've create a go-routine for each link. So we should be able to iterate that many times and wait.
 	// Waiting for the channel message is still blocking, but now we're reasonably guaranteed to get messages from each go-routine.
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	// for i := 0; i < len(links); i++ {
+	//
+	// Infinite loop to keep pinging links forever.
+	// We wait to get a response back from the child go-routine and then launch another for the same link.
+	// We are communicating strings over our channel, so we can use the message from that channel as an arg for checkLink().
+	for {
+		go checkLink(<-c, c)
 	}
 }
 
@@ -54,13 +59,13 @@ func checkLink(link string, c chan string) {
 	_, err := http.Get(link)
 
 	if err != nil {
-		c <- link + " might be down!"
-		// fmt.Println(link, "might be down!")
+		fmt.Println(link, "might be down!")
+		c <- link
 		return
 	}
 
-	c <- link + " is up!"
-	// fmt.Println(link, "is up!")
+	fmt.Println(link, "is up!")
+	c <- link
 }
 
 /*
