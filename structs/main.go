@@ -37,7 +37,12 @@ func main() {
 
 	// johnPointer := &john // & gives us the address of the john variable. This gives us a pointer to john.
 	// johnPointer.updateName("Jim")
-	(&john).updateName("Jimmy")
+	//
+	// Condensed alternative of the above two lines:
+	// (&john).updateName("Jimmy")
+	//
+	// Shortcut: Go knows we need a pointer here, so it will automatically get the address for us.
+	john.updateName("James")
 	john.print()
 }
 
