@@ -33,13 +33,13 @@ func main() {
 	// Both the i and card variables have local scope to this for-loop.
 	// The range keyword allows us to iterate over the entire length of the cards slice.
 	// Note: We *must* use the i variable somewhere since every declared variable must be used somewhere!
+	//
 	// for i, card := range cards {
 	// 	fmt.Println(i, card)
 	// }
 	//
 
-	cards := deck{"Ace of Spades", newCard()}
-	cards = append(cards, "Six of Spades")
+	var cards deck = newDeck()
 
 	cards.print()
 }
