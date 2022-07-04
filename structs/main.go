@@ -33,6 +33,9 @@ func main() {
 		},
 	}
 
-	fmt.Println(john)
-	fmt.Printf("%+v\n", john)
+	john.print()
+}
+
+func (p person) print() {
+	fmt.Printf("%+v\n", p)
 }
