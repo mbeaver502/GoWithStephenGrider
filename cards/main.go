@@ -44,6 +44,9 @@ func main() {
 
 	cards.saveToFile("my_cards")
 
+	newCards := newDeckFromFile("my_cards")
+	newCards.print()
+
 	//hand, remainingCards := dealHand(cards, 5)
 
 	// fmt.Println("-- Dealt Hand --")
