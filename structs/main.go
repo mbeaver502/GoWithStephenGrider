@@ -34,8 +34,21 @@ func main() {
 	}
 
 	john.print()
+
+	johnPointer := &john
+	johnPointer.updateName("Jim")
+	john.print()
 }
 
+// Go is a pass-by-value language.
+// So when we say we want to use p, Go needs to copy the value somewhere in memory so that we can access it.
+// This is unlike C#, where non-scalar variables are always passed by reference.
+// So if we try to modify p inside the print() function, we are modifying only the copy, not the original.
 func (p person) print() {
 	fmt.Printf("%+v\n", p)
+}
+
+// If we want to modify p directly, we can pass it by reference by using a pointer.
+func (p *person) updateName(newFirstName string) {
+	(*p).firstName = newFirstName
 }
