@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // Main entrypoint for our program.
 func main() {
 	// Declare and assign a value to a variable called "card".
@@ -27,17 +25,23 @@ func main() {
 	// Each element in an Array or Slice must be of the same type!
 	//
 	// Create a slice of strings representing our cards:
-	cards := []string{"Ace of Spades", newCard()}
-	cards = append(cards, "Six of Spades") // append returns a new slice object!
-
+	// cards := []string{"Ace of Spades", newCard()}
+	// cards = append(cards, "Six of Spades") // append returns a new slice object!
+	//
 	// The throwaway variable i represents the index of an item in the list.
 	// The throwaway variable card is the current item in our list.
 	// Both the i and card variables have local scope to this for-loop.
 	// The range keyword allows us to iterate over the entire length of the cards slice.
 	// Note: We *must* use the i variable somewhere since every declared variable must be used somewhere!
-	for i, card := range cards {
-		fmt.Println(i, card)
-	}
+	// for i, card := range cards {
+	// 	fmt.Println(i, card)
+	// }
+	//
+
+	cards := deck{"Ace of Spades", newCard()}
+	cards = append(cards, "Six of Spades")
+
+	cards.print()
 }
 
 // The newCard function has a return type of string. This function *must* return a string.
