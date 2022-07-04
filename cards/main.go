@@ -55,8 +55,3 @@ func main() {
 	// fmt.Println(hand.toString())
 	// fmt.Println(remainingCards.toString())
 }
-
-// The newCard function has a return type of string. This function *must* return a string.
-func newCard() string {
-	return "Five of Diamonds"
-}
