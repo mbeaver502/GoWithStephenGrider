@@ -44,6 +44,30 @@ func main() {
 	// Shortcut: Go knows we need a pointer here, so it will automatically get the address for us.
 	john.updateName("James")
 	john.print()
+
+	// Notice how are slice is mutable! It gets mutated by the function updateSlice.
+	// Slices are *reference* data types, which are different than *value* data types.
+	// With reference types, we don't have to worry about using pointers to modify the original value in memory.
+	// With value types, we need to pass a pointer in order to modify the original value in memory.
+	//
+	// Internally, Go tracks a few things for our slice:
+	//  (1) a pointer to the head of the internal array
+	//  (2) the capacity of the array, at present
+	//  (3) the length of the array
+	//  (4) an actual internal, underlying array at a separate address pointed to by (1)
+	// So when we interact with our slice, we're interacting with the slice struct.
+	mySlice := []string{"Hi", "There", "How", "Are", "You"}
+	fmt.Println(mySlice)
+
+	// When we call this function, we create a *copy* of the slice struct.
+	// However, because the copied slice struct points to the *original* array in memory, we are able to modify that *original* array.
+	updateSlice(mySlice)
+	fmt.Println(mySlice)
+}
+
+// This function will mutate the slice that's passed in!
+func updateSlice(s []string) {
+	s[0] = "Bye"
 }
 
 // Go is a pass-by-value language.
