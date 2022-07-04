@@ -35,8 +35,9 @@ func main() {
 
 	john.print()
 
-	johnPointer := &john // & gives us the address of the john variable. This gives us a pointer to john.
-	johnPointer.updateName("Jim")
+	// johnPointer := &john // & gives us the address of the john variable. This gives us a pointer to john.
+	// johnPointer.updateName("Jim")
+	(&john).updateName("Jimmy")
 	john.print()
 }
 
@@ -49,7 +50,7 @@ func (p person) print() {
 }
 
 // If we want to modify p directly, we can pass it by reference by using a pointer.
-// p *person here tells us that this function can be used by any variable that is a pointer to a person type.
+// (p *person() here tells us that this function can be used by any variable that is a pointer to a person type.
 func (p *person) updateName(newFirstName string) {
 	// By using *p, we can access the value stored at the address referenced by p.
 	// If we used just p (instead of *p), then we'd be operating on the address itself, not the stored value.
