@@ -34,6 +34,7 @@ func main() {
 	// The throwaway variable card is the current item in our list.
 	// Both the i and card variables have local scope to this for-loop.
 	// The range keyword allows us to iterate over the entire length of the cards slice.
+	// Note: We *must* use the i variable somewhere since every declared variable must be used somewhere!
 	for i, card := range cards {
 		fmt.Println(i, card)
 	}
