@@ -18,11 +18,11 @@ func main() {
 
 	// Create a person variable named alex.
 	// Since we have not assigned initial values, the person fields are initialized to their zero values (empt string).
-	//var alex person
-	//alex.firstName = "Alex"
-	//alex.lastName = "Anderson"
-	//alex.contact.email = "john@example.com"
-	//alex.contact.zip = "20007"
+	// var alex person
+	// alex.firstName = "Alex"
+	// alex.lastName = "Anderson"
+	// alex.contact.email = "john@example.com"
+	// alex.contact.zip = "20007"
 
 	john := person{
 		firstName: "John",
@@ -34,5 +34,5 @@ func main() {
 	}
 
 	fmt.Println(john)
-	fmt.Printf("%+v \n", john)
+	fmt.Printf("%+v\n", john)
 }
