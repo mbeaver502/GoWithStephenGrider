@@ -2,7 +2,10 @@
 // We can run `go test` to run tests.
 package main
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestNewDeck(t *testing.T) {
 	d := newDeck()
@@ -18,4 +21,21 @@ func TestNewDeck(t *testing.T) {
 	if d[len(d)-1] != "King of Diamonds" {
 		t.Errorf("Expected last card to be a King of Diamonds, but got %v", d[len(d)-1])
 	}
+}
+
+func TestSaveToFileAndNewDeckFromFile(t *testing.T) {
+	filename := "_decktesting"
+
+	os.Remove(filename)
+
+	deck := newdeck()
+	deck.saveToFile(filename)
+
+	loadedDeck := newDeckFromFile(filename)
+
+	if len(loadedDeck) != 52 {
+		t.Errorf("Expected deck length of 52, but got %v", len(d))
+	}
+
+	os.Remove(filename)
 }
