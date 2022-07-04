@@ -68,5 +68,7 @@ func newDeckFromFile(filename string) deck {
 		os.Exit(1)
 	}
 
+	// This type conversion of deck(...) only works because deck is defined as a slice of string.
+	// Note that strings.Split(...) returns a slice of string.
 	return deck(strings.Split(string(bs), ","))
 }
