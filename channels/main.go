@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -42,7 +43,7 @@ func main() {
 	// Receiving channel messages is a blocking action!
 	// fmt.Println(<-c)
 
-	// We've create a go-routine for each link. So we should be able to iterate that many times and wait.
+	// We've created a go-routine for each link. So we should be able to iterate that many times and wait.
 	// Waiting for the channel message is still blocking, but now we're reasonably guaranteed to get messages from each go-routine.
 	// for i := 0; i < len(links); i++ {
 	//
@@ -58,7 +59,23 @@ func main() {
 	// The message from our channel gets assigned to the variable l, which we can then use as an arg for checkLink().
 	// This is equivalent to the infinite loop above, but this is clearer in purpose.
 	for l := range c {
-		go checkLink(l, c)
+		// This will launch a new go-routine as soon as possible.
+		// So we're going to end up spamming each link as we spawn new go-routines as soon as the previous ends.
+		// go checkLink(l, c)
+
+		// Create and call a function literal (lambda function).
+		// We're using a lambda so that we can sleep before the next go-routine is spawned.
+		// We do this so that we're not unintentionally blocking our main go-routine with the sleep.
+		// The newly spawned lambda will first sleep and then execute checkLink(). Notice that checkLink() is not itself spawned as a go-routine.
+		// We sleep after each go-routine ends so that we're not spamming the links.
+		// After we've slept for an adequate time, then we can launch a new go-routine for the recently finished link.
+		// Recall that we're receiving the previously finished link over the channel.
+		// Since the link we get back from the channel can change at any time, we want to make sure we use the right one.
+		// We can ensure we use the right link (l) by passing it as an arg to our lambda function.
+		go func(link string) {
+			time.Sleep(3 * time.Second)
+			checkLink(link, c)
+		}(l)
 	}
 }
 
